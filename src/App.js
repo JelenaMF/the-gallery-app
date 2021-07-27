@@ -1,22 +1,17 @@
-import React from 'react';
+import {Container, Jumbotron} from 'react-bootstrap';
 import './css/index.css';
+
+import SearchForm from './Components/SearchForm';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          The Gallery App
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Jumbotron>
+        <Container>
+          <h1>The Gallery</h1>
+          <SearchForm />  
+        </Container>
+      </Jumbotron>
     </div>
   );
 }
