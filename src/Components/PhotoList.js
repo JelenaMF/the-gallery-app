@@ -16,9 +16,12 @@ const PhotoList = props => {
         console.log('no image');
     } 
     return(
-        <ul className="photo-container">
-            {photos}
-        </ul>
+        <div className="photo-container">
+            <ul>
+                {photos}
+            </ul>
+        </div>
+        
     )
 }
 export default PhotoList;
