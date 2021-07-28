@@ -1,25 +1,37 @@
-import React from 'react';
-import{ Form, 
-    FormGroup,
-    FormControl,
-    Button,
+import React, { Component } from 'react';
+// import{ Form, 
+//     FormGroup,
+//     FormControl,
+//     Button,
     
- } from 'react-bootstrap';
-import { FaSearch } from 'react-icons/fa';
+//  } from 'react-bootstrap';
+// import { FaSearch } from 'react-icons/fa';
 
- const SearchForm =() => {
-     return (
-        <Form className="search-form">
-            <FormGroup >
-            <FormControl
-            placeholder="Search"
-            aria-describedby="search-bar"
-            />
-            <Button className="search-form-button"> <FaSearch /> </Button> {/** button needs to be moved up next to the input field */}
-            </FormGroup>
-        
-        </Form>
-     );
- }
+export default class SearchForm extends Component {
+    state = {
+        searchText: ''
+    }
 
- export default SearchForm;
+    onSearchChange = e => {
+        this.setState({ searchText: e.target. value });
+    }
+
+    handleSubmit = e => {
+        e.prevent.default();
+    
+        //invoke the performSearch function that fetches data
+        this.props.onSearch(this.query.value);
+        e. currentTarget.reset();
+    }
+
+    render(){
+        return(
+            <div className="container">
+                <form className="search-form">
+
+                </form>
+            </div>
+            
+        )
+    }
+}

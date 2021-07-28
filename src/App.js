@@ -1,19 +1,46 @@
-import {Container, Jumbotron} from 'react-bootstrap';
-import './css/index.css';
+import React, { Component } from 'react';
+import './index.css';
+//import axios from 'axios';
+//import SearchForm from './Components/SearchForm';
+import PicList from './Components/PicList';
 
-import SearchForm from './Components/SearchForm';
 
-function App() {
-  return (
-    <div className="App">
-      <Jumbotron>
-        <Container>
-          <h1>The Gallery</h1>
-          <SearchForm />  
-        </Container>
-      </Jumbotron>
-    </div>
-  );
+
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = { 
+      pics: [],
+      loading: true
+    };
+  }
+  // componentDidMount(){
+  //   this.performSearch()
+  // }
+
+  //pass the query the value 'dogs' to prevent an empty page onload
+  // performSearch = (query = 'dogs') => {
+  //   axios.get('https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=a10abb8336a90173442222b094e5852b&tags=cat%2C+dog%2C+bird&per_page=25&format=json&nojsoncallback=1');
+  // }
+  render() {
+    console.log(this.state.pics) 
+    return(
+      <div className="main-header">
+        <div className="inner">
+          <h2>The Gallery App</h2>
+          {/** Enter Search bar */}
+        </div>
+        <div className="main-content">
+        {
+          (this.state.loading)
+          ?<p>loading...</p>
+          : <PicList data={this.state.pics}/>
+        }
+      </div>
+      </div>
+     
+      
+    );
+  }
 }
 
-export default App;

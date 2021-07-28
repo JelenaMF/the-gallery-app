@@ -1,3 +1,8 @@
+# API key
+
+The config file contains the information for API Key. 
+located in the src directory
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
