@@ -1,16 +1,25 @@
+//dependent imports
 import React, { Component } from 'react';
 import './css/index.css';
 import axios from 'axios';
+import {
+  BrowserRouter,
+  Router,
+  Switch,
+} from 'react-router-dom';
+
+//component imports
 import SearchForm from './Components/SearchForm';
-import PicList from './Components/PicList';
+import PhotoList from './Components/PhotoList';
 import apiKey from './config';
+import Nav from './Components/Nav'
 
 
 export default class App extends Component {
   constructor() {
     super();
     this.state = { 
-      pics: [],
+      photos: [],
       loading: true
     };
   }
@@ -23,26 +32,30 @@ export default class App extends Component {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=25&format=json&nojsoncallback=1`)
     .then(res => {
       this.setState({
-        pics: res.data,
+        photos: res.data.photos.photo,
         loading: false
       });
     })
+    .catch( err => {
+      console.log('Error fetching and parsing data', err)
+    })
   }
   render() {
-    console.log(this.state.pics) 
+    console.log(this.state.photos) 
     return(
       <div className="main-header">
         <div className="inner">
           <h2>The Gallery App</h2>
           {/** Enter Search bar */}
-          <SearchForm />
-          
+          <SearchForm />          
         </div>
         <div className="main-content">
+          <Nav />
+
         {
           (this.state.loading)
           ?<p>loading...</p>
-          : <PicList data={this.state.pics}/>
+          : <PhotoList data={this.state.photos}/>
         }
       </div>
       </div>
