@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import url from './PhotoList';
+
 export default class Nav extends Component {
-    render() {
+    const { search } = window.location;
+    
+    render(prop) {
         return(
             <nav className="main-nav">
                 <ul>
-                    <li><a href="#">Birds</a></li>
-                    <li><a href="#">Dogs</a></li>
-                    <li><a href="#">cats</a></li>
+                    <li><Link>Birds</Link></li>
+                    <li><Link>Dogs</Link></li>
+                    <li><Link>cats</Link></li>
                 </ul>
             </nav>
         );

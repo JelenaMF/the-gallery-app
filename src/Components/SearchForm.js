@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
-export default class SearchForm extends Component {
+class SearchForm extends Component {
     state = {
         searchText: ''
     }
@@ -12,9 +13,7 @@ export default class SearchForm extends Component {
     }
 
     handleSubmit = e => {
-        e.prevent.default();
-    
-        //invoke the performSearch function that fetches data
+        e.preventDefault();
         this.props.onSearch(this.query.value);
         e.currentTarget.reset();
     }
@@ -24,6 +23,7 @@ export default class SearchForm extends Component {
             <div className="container">
                 <form className="search-form" onSubmit={this.handleSubmit}>
                     <input type="search"
+                        value={this.state.inputValue}
                         onChange={this.onSearchChange}
                         name="search"
                         ref={(input) => this.query=input}
@@ -36,3 +36,5 @@ export default class SearchForm extends Component {
         )
     }
 }
+
+export default withRouter(SearchForm);

@@ -43,23 +43,25 @@ export default class App extends Component {
   render() {
     console.log(this.state.photos) 
     return(
-      <div className="main-header">
-        <div className="inner">
-          <h2>The Gallery App</h2>
-          {/** Enter Search bar */}
-          <SearchForm />          
-        </div>
-        <div className="main-content">
+      <BrowserRouter>
+        <div className="main-header">
+          <div className="inner">
+            <h2>The Gallery App</h2>
+            {/** Enter Search bar */}
+            <SearchForm />          
+          </div>
           <Nav />
 
-        {
-          (this.state.loading)
-          ?<p>loading...</p>
-          : <PhotoList data={this.state.photos}/>
-        }
-      </div>
-      </div>
-     
+          <div className="main-content">
+
+              {
+                (this.state.loading)
+                ?<p>loading...</p>
+                : <PhotoList data={this.state.photos}/>
+              }
+          </div>
+        </div>
+      </BrowserRouter>
       
     );
   }
