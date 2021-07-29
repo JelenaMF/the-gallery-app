@@ -29,7 +29,7 @@ export default class App extends Component {
 
   //pass the query the value 'dogs' to prevent an empty page onload
   performSearch = (query = 'dogs') => {
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=25&format=json&nojsoncallback=1`)
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(res => {
       this.setState({
         photos: res.data.photos.photo,
@@ -44,22 +44,22 @@ export default class App extends Component {
     console.log(this.state.photos) 
     return(
       <BrowserRouter>
+        
         <div className="main-header">
           <div className="inner">
             <h2>The Gallery App</h2>
             {/** Enter Search bar */}
-            <SearchForm />          
+            <SearchForm onSearch={this.performSearch}  />          
           </div>
-          <Nav />
-
-          <div className="main-content">
+          <Switch>
+            <Nav />
+          </Switch>
 
               {
                 (this.state.loading)
                 ?<p>loading...</p>
                 : <PhotoList data={this.state.photos}/>
               }
-          </div>
         </div>
       </BrowserRouter>
       
