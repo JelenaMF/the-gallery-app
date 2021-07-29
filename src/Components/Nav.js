@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import url from './PhotoList';
 
 export default class Nav extends Component {
-    const { search } = window.location;
-    
+    //const { search } = window.location;
+
     render(prop) {
         return(
             <nav className="main-nav">
