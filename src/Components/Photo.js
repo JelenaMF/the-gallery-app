@@ -1,4 +1,5 @@
 import React from 'react';
+
 //function to hold the photo data
 const Photo = props => (
     <li>

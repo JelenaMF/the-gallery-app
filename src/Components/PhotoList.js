@@ -16,8 +16,10 @@ const PhotoList = props => {
         console.log('no image');
     } 
     return(
+    
         <div className="photo-container">
             <h2> {props.title} </h2>
+
             <ul>
                 {photos}
             </ul>

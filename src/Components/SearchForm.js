@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 
 export default class SearchForm extends Component {

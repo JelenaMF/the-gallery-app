@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-
+import PhotoList from './PhotoList';
+console.log(PhotoList);
 
 export default class Nav extends Component {
 

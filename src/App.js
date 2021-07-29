@@ -49,8 +49,10 @@ export default class App extends Component {
           <div className="inner">
             <h2>The Gallery App</h2>
             {/** Enter Search bar */}
-            <SearchForm onSearch={this.performSearch}  />          
           </div>
+          <div className="container">
+          <SearchForm onSearch={this.performSearch}  />          
+
           <Switch>
             <Nav />
           </Switch>
@@ -60,6 +62,8 @@ export default class App extends Component {
                 ?<p>loading...</p>
                 : <PhotoList data={this.state.photos}/>
               }
+
+          </div>
         </div>
       </BrowserRouter>
       
