@@ -6,4 +6,4 @@ const NotFound = props => (
     </li>
 );
 
-export default NotFound
+export default NotFound;

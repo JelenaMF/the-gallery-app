@@ -44,10 +44,9 @@ export default class App extends Component {
     console.log(this.state.photos) 
     return(
       <BrowserRouter>
-        
         <div className="main-header">
           <div className="inner">
-            <h2>The Gallery App</h2>
+            <h1 className="main-title">The Gallery App</h1>
             {/** Enter Search bar */}
           </div>
           <div className="container">
