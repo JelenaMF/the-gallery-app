@@ -12,14 +12,11 @@ const PhotoList = props => {
         });
     } else {
         /** route to no-results-layout */
-        <NotFound />
+        photos = <NotFound />
         console.log('no image');
     } 
     return(
-    
         <div className="photo-container">
-            <h2> {props.title} </h2>
-
             <ul>
                 {photos}
             </ul>
