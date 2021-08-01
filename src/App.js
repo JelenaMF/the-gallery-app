@@ -1,4 +1,3 @@
-//dependent imports
 import React, { Component } from 'react';
 import './css/index.css';
 import axios from 'axios';
