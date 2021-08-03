@@ -2,23 +2,23 @@ import React from 'react';
 import Photo from './Photo';
 import NotFound from './NotFound';
 
-const PhotoList = props => {
+const PhotoList = (props) => {
     const results = props.data;
-    let photos;
+    const alt = props.alt;
+    let list = [];
     if(results.length > 0){
-        photos = results.map(photo => {
-            const url = `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`;
-            return <Photo url={url} key={photo.id} desc={photo.title} />
-        });
+       for(let i = 0; i < results.length; i++){
+           list.push(<Photo url={results[i]} alt={alt} key={i}  />)
+       }
     } else {
         /** route to no-results-layout */
-        photos = <NotFound />
+        <NotFound />
         console.log('no image');
     } 
     return(
         <div className="photo-container">
             <ul>
-                {photos}
+                {list}
             </ul>
         </div>
         

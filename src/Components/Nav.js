@@ -10,7 +10,7 @@ const Nav = props => {
                 <ul>
                     <li><NavLink to="/birds">Birds</NavLink></li>
                     <li><NavLink to="/monkeys">Monkeys</NavLink></li>
-                    <li><NavLink to="/cats">Cats</NavLink></li>
+                    <li><NavLink to="/cats">cats</NavLink></li>
                 </ul>
             </nav>
              
