@@ -3,7 +3,10 @@ import { Component } from 'react';
 import './css/index.css';
 import axios from 'axios';
 import {
-  BrowserRouter
+  BrowserRouter,
+  Switch,
+  Route,
+  Redirect
  
 } from 'react-router-dom';
 
@@ -19,48 +22,29 @@ export default class App extends Component {
     super();
     this.state = { 
       photos: [],
-      birds: [],
-      monkeys: [],
-      cats: [],
       loading: true
     };
   }
   componentDidMount(){
-    this.performSearch()
+    this.getPhoto()
   }
 
   //pass the query the value 'dogs' to prevent an empty page onload
-  performSearch = (query = 'dogs') => {
+  getPhoto = (query = 'dogs') => { 
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
     axios.get(url)
     .then(res => {
       this.setState({
-        photos: res.data.photos.photo,
+        photos: res.data.photos.photo, 
         loading: false
       });
-    })
-    .then(() => {
-      this.setState({
-        query: 'birds',
-        loading: false
-      })
-    })
-    .then(() => {
-      this.setState({
-        query: 'monkeys',
-        loading: false
-      })
-    })
-    .then(() => {
-      this.setState({
-        query: 'cats',
-        loading: false
-      })
+    
     })
     .catch( err => {
       console.log('Error fetching and parsing data', err)
     })
   }
+
   render() {
     
     return(
@@ -71,18 +55,18 @@ export default class App extends Component {
             {/** Enter Search bar */}
           </div>
           <div className="container">
-          <SearchForm onSearch={this.performSearch}  />          
-            <Nav 
-            birds={this.performSearch}
-            monkeys={this.performSearch}
-            cats={this.performSearch}
-             />
+          <SearchForm onSearch={this.getPhoto}  />          
+            <Nav  />
+            <Switch>
+              <Redirect exact from="/" to="/dogs" /> 
+              <Route exact path={"/:query"}>
               {
                 (this.state.loading)
                 ?<p>loading...</p>
-                : <PhotoList data={this.state.photos}/>
+                : <PhotoList data={this.state.photos} />
               }
-
+              </Route>
+            </Switch>
           </div>
         </div>
       </BrowserRouter>

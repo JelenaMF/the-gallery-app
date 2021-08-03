@@ -1,21 +1,20 @@
   
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 
-export default class Nav extends Component {
-    
-    render() {
+
+const Nav = props => {
         return(
             <nav className="main-nav">
                 <ul>
-                    <li><Link to="/birds" >Birds</Link></li>
-                    <li><Link to="/monkeys">Monkeys</Link></li>
-                    <li><Link to="/cats">cats</Link></li>
+                    <li><NavLink to="/birds">Birds</NavLink></li>
+                    <li><NavLink to="/monkeys">Monkeys</NavLink></li>
+                    <li><NavLink to="/cats">Cats</NavLink></li>
                 </ul>
             </nav>
              
         );
     }
 
-}
+export default Nav;
