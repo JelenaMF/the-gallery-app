@@ -63,7 +63,7 @@ export default class Home extends Component {
                 <h1>{this.state.title}</h1>
                 {
                   (this.state.loading)
-                  ?<p>loading...</p>
+                  ?<h2>loading...</h2>
                   : <PhotoList data={this.state.photos} />
                 }
                 </div>
