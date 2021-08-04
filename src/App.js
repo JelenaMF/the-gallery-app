@@ -8,7 +8,7 @@ import './css/index.css';
 
 //importing components
 import Home from "./Components/Home"
-import Photo from "./Components/Photo";
+import PhotoList from "./Components/PhotoList";
 
 export default class App extends React.Component {
   render(){
@@ -17,7 +17,7 @@ export default class App extends React.Component {
         
         <Switch>
           <Route exact path='/' render={() => <Home />} />
-          <Route path='/birds'  />
+          <Route path='/birds' render={() => } />
           <Route path='/monkeys'  />
           <Route path='/cats'  />
         </Switch>

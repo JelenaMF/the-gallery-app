@@ -15,12 +15,16 @@ export default class Home extends Component {
       super();
       this.state = { 
         photos: [],
+        birds: [],
+        monkeys: [],
+        cats: [],  
         loading: true,
         title: ''
       };
     }
     componentDidMount(){
       this.getPhoto()
+      
     }
   
     //pass the query the value 'dogs' to prevent an empty page onload
@@ -33,13 +37,18 @@ export default class Home extends Component {
           const id= photoData.id;
           const server= photoData.server;
           const secret = photoData.secret;
-          return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
+          const photoUrl = `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
+          return photoUrl;
   
         })
         this.setState({
           photos: photoInfo, 
           loading: false,
-          title: query.toUpperCase()
+          title: query.toUpperCase(),
+          /**queries created for the links */
+          birds: query = 'birds',
+          monkeys: query= "monkeys",
+          cats: query = "cats"
         });
       
       })
@@ -58,7 +67,7 @@ export default class Home extends Component {
             <div className="container">
             <SearchForm onSearch={this.getPhoto}  />   
                      
-              <Nav />
+              <Nav  />
               <div className="photo-container">
                 <h1>{this.state.title}</h1>
                 {
