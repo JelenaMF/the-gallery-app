@@ -49,7 +49,6 @@ export default class Home extends Component {
     }
   
     render() {
-      
       return(
           <div className="main-header">
             <div className="inner">
@@ -62,8 +61,6 @@ export default class Home extends Component {
               <Nav />
               <div className="photo-container">
                 <h1>{this.state.title}</h1>
-           
-        
                 {
                   (this.state.loading)
                   ?<p>loading...</p>

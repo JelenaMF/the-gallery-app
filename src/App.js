@@ -8,16 +8,18 @@ import './css/index.css';
 
 //importing components
 import Home from "./Components/Home"
-import Nav from './Components/Nav'
+import Photo from "./Components/Photo";
 
 export default class App extends React.Component {
   render(){
     return(
       <BrowserRouter>
-        <Home />
+        
         <Switch>
           <Route exact path='/' render={() => <Home />} />
-          <Route path='/birds' render={() => <Nav />} />
+          <Route path='/birds'  />
+          <Route path='/monkeys'  />
+          <Route path='/cats'  />
         </Switch>
       </BrowserRouter>
     )

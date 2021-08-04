@@ -1,16 +1,16 @@
   
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
-const Nav = props => {
+const Nav = ({match}) => {
         return(
             <nav className="main-nav">
                 <ul>
-                    <li><NavLink to="/birds">Birds</NavLink></li>
-                    <li><NavLink to="/monkeys">Monkeys</NavLink></li>
-                    <li><NavLink to="/cats">cats</NavLink></li>
+                    <li><Link to="/birds">Birds</Link></li>
+                    <li><Link to="/monkeys">Monkeys</Link></li>
+                    <li><Link to="/cats">cats</Link></li>
                 </ul>
             </nav>
              
