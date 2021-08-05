@@ -67,7 +67,7 @@ export default class Home extends Component {
             <div className="container">
             <SearchForm onSearch={this.getPhoto}  />   
                      
-              <Nav  />
+              <Nav />
               <div className="photo-container">
                 <h1>{this.state.title}</h1>
                 {
