@@ -8,7 +8,6 @@ import './css/index.css';
 
 //importing components
 import Home from "./Components/Home"
-import PhotoList from "./Components/PhotoList";
 
 export default class App extends React.Component {
   render(){
@@ -16,10 +15,11 @@ export default class App extends React.Component {
       <BrowserRouter>
         
         <Switch>
-          <Route exact path='/' render={() => <Home />} />
-          <Route path='/birds'  />
-          <Route path='/monkeys'  />
-          <Route path='/cats'  />
+          <Route exact path='/' component={Home} />
+          <Route exact path={'/search/:query'}  /> 
+          <Route path="birds" render={ () => {this.getPhoto('birds')}} />
+          <Route path="cats" render={ () => {this.getPhoto('cats')} } />
+          <Route path="monkeys" render={ () => {this.getPhoto('monkeys')} } />
         </Switch>
       </BrowserRouter>
     )

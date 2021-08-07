@@ -3,6 +3,9 @@
 The config file contains the information for API Key. 
 located in the src directory
 
+# Routing Info
+
+The App.js file in the src directory contains the routing file
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

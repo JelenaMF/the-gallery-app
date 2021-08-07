@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 import { FaSearch } from 'react-icons/fa';
+import { withRouter } from 'react-router';
 
-export default class SearchForm extends Component {
+ class SearchForm extends Component {
     state = {
-        searchText: ''
+        searchText: '',
     }
 
     onSearchChange = e => {
@@ -23,6 +24,7 @@ export default class SearchForm extends Component {
                     <input type="search"
                         onChange={this.onSearchChange}
                         name="search"
+                        value={this.state.searchText}
                         ref={(input) => this.query=input}
                         placeholder="Search..." 
                     />
@@ -33,3 +35,4 @@ export default class SearchForm extends Component {
     }
 }
 
+export default withRouter(SearchForm)

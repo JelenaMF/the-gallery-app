@@ -11,47 +11,36 @@ import Nav from './Nav'
 
 
 export default class Home extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = { 
-        photos: [],
-        birds: [],
-        monkeys: [],
-        cats: [],  
+        search: [],
+        searchText:"",
+        photos: [],  
         loading: true,
         title: ''
       };
     }
     componentDidMount(){
-      this.getPhoto()
+      //pass the query the value 'dogs' to prevent an empty page onload
+      this.getPhoto('dogs')
       
     }
+    
   
-    //pass the query the value 'dogs' to prevent an empty page onload
-    getPhoto = (query = 'dogs') => { 
+    getPhoto = (query = this.search) => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
-        const data = res.data.photos.photo;
-        const photoInfo = data.map((photoData) => {
-          const id= photoData.id;
-          const server= photoData.server;
-          const secret = photoData.secret;
-          const photoUrl = `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
-          return photoUrl;
-  
-        })
         this.setState({
-          photos: photoInfo, 
+          photos: res.data.photos.photo, 
           loading: false,
           title: query.toUpperCase(),
           /**queries created for the links */
-          birds: query = 'birds',
-          monkeys: query= "monkeys",
-          cats: query = "cats"
         });
-      
       })
+        
+        
       .catch( err => {
         console.log('Error fetching and parsing data', err)
       })
@@ -65,9 +54,9 @@ export default class Home extends Component {
               {/** Enter Search bar */}
             </div>
             <div className="container">
-            <SearchForm onSearch={this.getPhoto}  />   
+            <SearchForm query={this.state.search} onSearch={this.getPhoto}  />   
                      
-              <Nav />
+              <Nav  /> 
               <div className="photo-container">
                 <h1>{this.state.title}</h1>
                 {
