@@ -22,29 +22,62 @@ export default class Home extends Component {
         searchText:"",  
         loading: true,
         title: '',
+        birds: [],
+        cats: [],
+        monkeys: []
      
       };
     }
     componentDidMount(){
       //pass the query the value 'dogs' to prevent an empty page onload
-      this.getPhoto('dogs')
+      this.getPhoto()
       
     }
 
   
-    getPhoto = (query) => { 
+    getPhoto = (query = 'dogs') => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
         this.setState({
           photos: res.data.photos.photo, 
           loading: false,
-          title: query.toUpperCase(),
-          /**queries created for the links */
+          title: query.toUpperCase()
         });
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
+      })
+    }
+
+    getBirdPhoto = (query = 'birds') => {
+      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => {
+          this.setState({
+            birds: res.data.birds.photo,
+            loading: false,
+            title: query.toUpperCase()
+        })
+      })
+    }
+    getBirdPhoto = (query = 'monkeys') => {
+      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => {
+          this.setState({
+            birds: res.data.monkeys.photo,
+            loading: false,
+            title: query.toUpperCase()
+        })
+      })
+    }
+    getBirdPhoto = (query = 'cats') => {
+      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => {
+          this.setState({
+            birds: res.data.cats.photo,
+            loading: false,
+            title: query.toUpperCase()
+        })
       })
     }
   
@@ -60,10 +93,10 @@ export default class Home extends Component {
               <SearchForm query={this.state.search} onSearch={this.getPhoto}  />   
               <Nav  /> 
               <Switch>
-                <Route exact path="/search/:query" render={() => { /**  todo, do this one last */}}  /> 
-                <Route path="/birds" render={ () => <PhotoList />} />
-                <Route path="/cats" render={ () => { /**todo, render your PhotoList component here */}} />
-                <Route path="/monkeys" render={ () => { /**todo, render your PhotoList component here */}} />
+                <Route exact path="/search/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
+                <Route path="/birds" render={ () => <PhotoList data={this.state.birds}/>} />
+                <Route path="/cats" render={ () => { <PhotoList data={this.state.cats}/>}} />
+                <Route path="/monkeys" render={ () => <PhotoList data={this.state.monkeys}/>} />
               </Switch>
             </BrowserRouter>
                      
