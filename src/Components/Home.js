@@ -6,7 +6,7 @@ import axios from 'axios';
 //component imports
 import SearchForm from './SearchForm';
 import PhotoList from './PhotoList';
-import apiKey from './config/config';
+import apiKey from '../config';
 import Nav from './Nav'
 
 
