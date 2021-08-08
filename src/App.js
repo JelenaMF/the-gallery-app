@@ -54,27 +54,28 @@ export default class Home extends Component {
       axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(res => {
           this.setState({
-            birds: res.data.birds.photo,
+            birds: res.data.birds.photo, //returns no photo 
+            loading: false,
+            title: query.toUpperCase()
+            
+        })
+      })
+    }
+    getMonkeyPhoto = (query = 'monkeys') => {
+      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => {
+          this.setState({
+            monkeys: res.data.monkeys.photo, //returns no photo
             loading: false,
             title: query.toUpperCase()
         })
       })
     }
-    getBirdPhoto = (query = 'monkeys') => {
+    getCatsPhoto = (query = 'cats') => {
       axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(res => {
           this.setState({
-            birds: res.data.monkeys.photo,
-            loading: false,
-            title: query.toUpperCase()
-        })
-      })
-    }
-    getBirdPhoto = (query = 'cats') => {
-      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(res => {
-          this.setState({
-            birds: res.data.cats.photo,
+            cats: res.data.cats.photo, //no console error but nothing is displaying either 
             loading: false,
             title: query.toUpperCase()
         })
