@@ -12,7 +12,6 @@ import PhotoList from './Components/PhotoList';
 import apiKey from './config';
 import Nav from './Components/Nav'
 
-
 export default class Home extends Component {
     constructor(props) {
       super(props);
@@ -22,19 +21,27 @@ export default class Home extends Component {
         searchText:"",  
         loading: true,
         title: '',
-        birds: [],
-        cats: [],
-        monkeys: []
      
       };
     }
+    /**
+     * mounts the api from the `getPhoto`
+     * @param dogs - initial query 
+     */
+
     componentDidMount(){
-      //pass the query the value 'dogs' to prevent an empty page onload
-      this.getPhoto()
+      this.getPhoto(this.props.search)
       
     }
 
-  
+    /** 
+     * `getPhoto` requests an api and sets the state properties
+     * @param {string} query - a url query to set to state
+     * @param {Array} photos - an array of photo url from API 
+     * @param {bool} loading - removes loading text when fetching is done. 
+     * @param {string} title - sets title of the searched query.  
+     * */
+
     getPhoto = (query = 'dogs') => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
@@ -43,42 +50,11 @@ export default class Home extends Component {
           photos: res.data.photos.photo, 
           loading: false,
           title: query.toUpperCase()
+          
         });
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
-      })
-    }
-
-    getBirdPhoto = (query = 'birds') => {
-      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(res => {
-          this.setState({
-            birds: res.data.birds.photo, //returns no photo 
-            loading: false,
-            title: query.toUpperCase()
-            
-        })
-      })
-    }
-    getMonkeyPhoto = (query = 'monkeys') => {
-      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(res => {
-          this.setState({
-            monkeys: res.data.monkeys.photo, //returns no photo
-            loading: false,
-            title: query.toUpperCase()
-        })
-      })
-    }
-    getCatsPhoto = (query = 'cats') => {
-      axios(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
-      .then(res => {
-          this.setState({
-            cats: res.data.cats.photo, //no console error but nothing is displaying either 
-            loading: false,
-            title: query.toUpperCase()
-        })
       })
     }
   
@@ -91,13 +67,13 @@ export default class Home extends Component {
             </div>
             <div className="container">
             <BrowserRouter>
-              <SearchForm query={this.state.search} onSearch={this.getPhoto}  />   
+              <SearchForm onSearch={this.getPhoto}  />   
               <Nav  /> 
               <Switch>
                 <Route exact path="/search/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
-                <Route path="/birds" render={ () => <PhotoList data={this.state.birds}/>} />
-                <Route path="/cats" render={ () => { <PhotoList data={this.state.cats}/>}} />
-                <Route path="/monkeys" render={ () => <PhotoList data={this.state.monkeys}/>} />
+                <Route path="/birds" render={ () => {<PhotoList  />}} />
+                <Route path="/cats" render={ () => { <PhotoList  />}} />
+              <Route path="/monkeys" render={ () => {<PhotoList  />}} />
               </Switch>
             </BrowserRouter>
                      
