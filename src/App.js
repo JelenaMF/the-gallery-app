@@ -73,7 +73,7 @@ export default class Home extends Component {
                 <Route exact path="/search/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
                 <Route path="/birds" render={ () => {<PhotoList  />}} />
                 <Route path="/cats" render={ () => { <PhotoList  />}} />
-              <Route path="/monkeys" render={ () => {<PhotoList  />}} />
+                <Route path="/monkeys" render={ () => {<PhotoList  />}} />
               </Switch>
             </BrowserRouter>
                      
