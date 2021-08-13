@@ -1,7 +1,6 @@
 # API key
 
 The config file contains the information for API Key. 
-located in the src directory
 
 # Routing Info
 
