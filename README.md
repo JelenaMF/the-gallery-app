@@ -1,6 +1,6 @@
 # API key
 
-The config file contains the information for API Key. 
+The config file contains the information for [flickr](flickr.com) API key 
 
 # Routing Info
 
