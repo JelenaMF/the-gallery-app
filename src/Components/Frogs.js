@@ -19,6 +19,13 @@ export default class Frogs extends Component {
         this.getPhoto('frogs')
         
       }
+      /** 
+     * `getPhoto` requests an api and sets the state properties
+     * @param {string} query - a url query to set to state
+     * @param {Array} photos - an array of photo url from API 
+     * @param {bool} loading - removes loading text when fetching is done. 
+     * @param {string} title - sets title of the searched query.  
+     * */
 
     getPhoto = (query) => { 
     const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
