@@ -4,26 +4,24 @@ import NotFound from './NotFound';
 
 const PhotoList = props => {
     let results = props.data;
-    let photos;
+    const alt = props.alt;
+    let list = [];
     if(results.length > 0){
-         photos = results.map((photoData) => {
-            const id= photoData.id;
-            const server= photoData.server;
-            const secret = photoData.secret;
-            const photoUrl = `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
-            return <Photo url={photoUrl} key={id}  />
+         
+        for(let i = 0; i < results.length; i++){
+            list.push(<Photo url={results[i]} alt={alt} key={i}  />)
+        }
         
-        })
+    
     } else {
         /** route to no-results-layout */
         <NotFound />
-        console.log('no image');
     } 
     return(
         <div className="photo-container">
             <h2> {props.title} </h2>
             <ul>
-                {photos}
+                {list}
             </ul>
         </div>
         

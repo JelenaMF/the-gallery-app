@@ -1,7 +1,8 @@
 //importing dependents 
-import React, { Component } from "react";
+import React, { Component} from "react";
 import Switch from "react-bootstrap/esm/Switch";
 import { BrowserRouter, Route } from "react-router-dom";
+
 
 import axios from 'axios';
 
@@ -9,8 +10,12 @@ import './css/index.css';
 //component imports
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
+import Birds from './Components/Birds'
 import apiKey from './config';
 import Nav from './Components/Nav'
+import Frogs from "./Components/Frogs";
+import Cats from "./Components/Cats";
+
 
 export default class Home extends Component {
     constructor(props) {
@@ -21,8 +26,8 @@ export default class Home extends Component {
         searchText:"",  
         loading: true,
         title: '',
-     
       };
+
     }
     /**
      * mounts the api from the `getPhoto`
@@ -30,7 +35,7 @@ export default class Home extends Component {
      */
 
     componentDidMount(){
-      this.getPhoto(this.props.search)
+      this.getPhoto('dogs ')
       
     }
 
@@ -42,22 +47,30 @@ export default class Home extends Component {
      * @param {string} title - sets title of the searched query.  
      * */
 
-    getPhoto = (query = 'dogs') => { 
+    getPhoto = (query = this.search) => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
+        const data = res.data.photos.photo;
+        const picArray = data.map((photoData) => {
+        const id= photoData.id;
+        const server= photoData.server;
+        const secret = photoData.secret;
+          
+        return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
+        });
         this.setState({
-          photos: res.data.photos.photo, 
+          photos: picArray, 
           loading: false,
           title: query.toUpperCase()
-          
         });
+        
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
       })
     }
-  
+   
     render() {
       return(
           <div className="main-header">
@@ -71,9 +84,10 @@ export default class Home extends Component {
               <Nav  /> 
               <Switch>
                 <Route exact path="/search/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
-                <Route path="/birds" render={ () => {<PhotoList  />}} />
-                <Route path="/cats" render={ () => { <PhotoList  />}} />
-                <Route path="/monkeys" render={ () => {<PhotoList  />}} />
+                <Route path="/birds"> <Birds /> </Route>
+                <Route path="/frogs"> <Frogs /> </Route>
+                <Route path="/cats"> <Cats /> </Route>
+  
               </Switch>
             </BrowserRouter>
                      
