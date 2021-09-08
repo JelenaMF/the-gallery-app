@@ -35,9 +35,17 @@ export default class Home extends Component {
      */
 
     componentDidMount(){
-      this.getPhoto('dogs ')
-      
+      this.getPhoto(this.search)
     }
+
+    birdPhotos = () => {
+      this.setState({
+        searchText: "bird",
+        loading: false,
+        title: "birds"
+      })
+    }
+
 
     /** 
      * `getPhoto` requests an api and sets the state properties
@@ -47,7 +55,7 @@ export default class Home extends Component {
      * @param {string} title - sets title of the searched query.  
      * */
 
-    getPhoto = (query = this.search) => { 
+    getPhoto = (query = 'dogs') => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
@@ -64,7 +72,6 @@ export default class Home extends Component {
           loading: false,
           title: query.toUpperCase()
         });
-        
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
@@ -82,23 +89,24 @@ export default class Home extends Component {
             <BrowserRouter>
               <SearchForm onSearch={this.getPhoto}  />   
               <Nav  /> 
-              <Switch>
-                <Route exact path="/search/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
-                <Route path="/birds"> <Birds /> </Route>
-                <Route path="/frogs"> <Frogs /> </Route>
-                <Route path="/cats"> <Cats /> </Route>
-  
-              </Switch>
-            </BrowserRouter>
-                     
+              
               <div className="photo-container">
                 <h1>{this.state.title}</h1>
                 {
                   (this.state.loading)
                   ?<h2>loading...</h2>
-                  : <PhotoList data={this.state.photos} />
+                  : <Switch>
+                    <PhotoList data={this.state.photos} />
+                    <Route exact path="/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
+                    <Route path="/birds"> <Birds /> </Route>
+                    <Route path="/frogs"> <Frogs /> </Route>
+                    <Route path="/cats"> <Cats /> </Route>
+              </Switch>
                 }
                 </div>
+            </BrowserRouter>
+                     
+              
             </div>
           </div>
         

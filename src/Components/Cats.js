@@ -17,8 +17,8 @@ export default class Birds extends Component {
 
       componentDidMount(){
         this.getPhoto('cats')
-        
       }
+
 
       /** 
      * `getPhoto` requests an api and sets the state properties
