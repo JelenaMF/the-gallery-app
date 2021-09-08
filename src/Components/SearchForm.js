@@ -16,9 +16,9 @@ import { withRouter } from 'react-router';
     handleSubmit = e => {
         e.preventDefault();
         //set path with searchText
-        let path = `search/${this.state.searchText}`
+        let path = `${this.state.searchText}`
         this.props.onSearch(this.query.value);
-        this.props.history.push(path);
+        this.props.history.push(`/search/${path}`);
         e.currentTarget.reset();
     }
 
