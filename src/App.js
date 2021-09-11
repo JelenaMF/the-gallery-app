@@ -10,42 +10,60 @@ import './css/index.css';
 //component imports
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
-import Birds from './Components/Birds'
 import apiKey from './config';
 import Nav from './Components/Nav'
-import Frogs from "./Components/Frogs";
-import Cats from "./Components/Cats";
 
 
-export default class Home extends Component {
+
+export default class App extends Component {
+  static defaultProps = {
+    queries: [
+      'birds', 'cats', 'frogs'
+    ]
+  }
     constructor(props) {
       super(props);
+      //set initial state
       this.state = { 
         search: [],
         photos:[],
-        searchText:"",  
+        searchText:'',  
         loading: true,
         title: '',
       };
-
+    
     }
+
+    onChange(e){
+      this.setState({
+        [e.target.id]: e.target.value
+      })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+      if (
+        prevState.photos !== this.state.photos ||
+        prevState.title !== this.state.title
+      ) {
+        if (this.state.title && this.state.photos) {
+          this.setState({ loading: false });
+        } else {
+          this.setState({ loading: true });
+        }
+      }
+    }
+
+
     /**
      * mounts the api from the `getPhoto`
      * @param dogs - initial query 
      */
 
-    componentDidMount(){
-      this.getPhoto(this.search)
+    componentDidMount(props){
+      this.getPhoto(props )
     }
 
-    birdPhotos = () => {
-      this.setState({
-        searchText: "bird",
-        loading: false,
-        title: "birds"
-      })
-    }
-
+  
 
     /** 
      * `getPhoto` requests an api and sets the state properties
@@ -55,7 +73,7 @@ export default class Home extends Component {
      * @param {string} title - sets title of the searched query.  
      * */
 
-    getPhoto = (query = 'dogs') => { 
+    getPhoto = (query = 'dog') => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
@@ -72,12 +90,13 @@ export default class Home extends Component {
           loading: false,
           title: query.toUpperCase()
         });
+
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
       })
     }
-   
+
     render() {
       return(
           <div className="main-header">
@@ -88,8 +107,7 @@ export default class Home extends Component {
             <div className="container">
             <BrowserRouter>
               <SearchForm onSearch={this.getPhoto}  />   
-              <Nav  /> 
-              
+              <Nav /> 
               <div className="photo-container">
                 <h1>{this.state.title}</h1>
                 {
@@ -98,15 +116,13 @@ export default class Home extends Component {
                   : <Switch>
                     <PhotoList data={this.state.photos} />
                     <Route exact path="/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
-                    <Route path="/birds"> <Birds /> </Route>
-                    <Route path="/frogs"> <Frogs /> </Route>
-                    <Route path="/cats"> <Cats /> </Route>
-              </Switch>
+                    <Route path="/birds" render={() => {this.getPhoto('birds')}} />  
+                    <Route path="/frogs" render={() => {this.getPhoto('frogs')}} />
+                    <Route path="/cats" render={() => {this.getPhoto('cats')}} />
+                  </Switch>
                 }
                 </div>
-            </BrowserRouter>
-                     
-              
+            </BrowserRouter>     
             </div>
           </div>
         
