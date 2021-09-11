@@ -1,15 +1,15 @@
   
 //import React, {useParams} from 'react';
-import { Link } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 
 const Nav = ( props ) => {
 
         return(
             <nav className="main-nav">
                 <ul>
-                    <li><Link id="birds" to="/birds">Birds</Link></li>
-                    <li><Link id="frogs" to="/frogs">Frogs</Link></li>
-                    <li><Link id="cats" to="/cats">Cats</Link></li>
+                    <li><NavLink id="birds" to="/birds">Birds</NavLink></li>
+                    <li><NavLink id="frogs" to="/frogs">Frogs</NavLink></li>
+                    <li><NavLink id="cats" to="/cats">Cats</NavLink></li>
                 </ul>
             </nav>
              
