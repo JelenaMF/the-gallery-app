@@ -1,6 +1,5 @@
 //importing dependents 
 import React, { Component} from "react";
-import Switch from "react-bootstrap/esm/Switch";
 import { BrowserRouter, Route } from "react-router-dom";
 
 
@@ -16,11 +15,7 @@ import Nav from './Components/Nav'
 
 
 export default class App extends Component {
-  static defaultProps = {
-    queries: [
-      'birds', 'cats', 'frogs'
-    ]
-  }
+ 
     constructor(props) {
       super(props);
       //set initial state
@@ -30,34 +25,35 @@ export default class App extends Component {
         searchText:'',  
         loading: true,
         title: '',
+        
       };
-    
+      this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-      if (
-        prevState.photos !== this.state.photos ||
-        prevState.title !== this.state.title
-      ) {
-        if (this.state.title && this.state.photos) {
-          this.setState({ loading: false });
-        } else {
-          this.setState({ loading: true });
+    //updates the photos from the previous links 
+    //need to stop infinite loop after button click 
+    componentDidUpdate(prevProps, prevState) { 
+      if(prevState.searchText !== this.state.searchText && 
+        prevState.title !== this.state.title){
+        this.getPhoto(this.state.searchText)
+        return this.setState({loading: false})
         }
-      }
     }
 
+    handleClick = ({target: {value}}) => {
+      this.setState({searchText: value});
+      this.getPhoto(value)
+    }
 
     /**
      * mounts the api from the `getPhoto`
      * @param dogs - initial query 
      */
 
-    componentDidMount(props){
-      this.getPhoto(props )
+    componentDidMount(){
+      this.getPhoto( )
     }
 
-  
 
     /** 
      * `getPhoto` requests an api and sets the state properties
@@ -66,7 +62,7 @@ export default class App extends Component {
      * @param {bool} loading - removes loading text when fetching is done. 
      * @param {string} title - sets title of the searched query.  
      * */
-
+    
     getPhoto = (query = 'dog') => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
@@ -76,7 +72,6 @@ export default class App extends Component {
         const id= photoData.id;
         const server= photoData.server;
         const secret = photoData.secret;
-          
         return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
         });
         this.setState({
@@ -84,7 +79,7 @@ export default class App extends Component {
           loading: false,
           title: query.toUpperCase()
         });
-
+        
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
@@ -107,13 +102,13 @@ export default class App extends Component {
                 {
                   (this.state.loading)
                   ?<h2>loading...</h2>
-                  : <Switch>
-                    <PhotoList data={this.state.photos} />
+                  : <Route>
+                    <Route  path="/" render={() =>  <PhotoList data={this.state.photos} /> } />
                     <Route exact path="/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
                     <Route path="/birds" render={() => {this.getPhoto('birds')}} />  
                     <Route path="/frogs" render={() => {this.getPhoto('frogs')}} />
                     <Route path="/cats" render={() => {this.getPhoto('cats')}} />
-                  </Switch>
+                  </Route>
                 }
                 </div>
             </BrowserRouter>     
