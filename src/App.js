@@ -1,43 +1,43 @@
 //importing dependents 
 import React, { Component} from "react";
+import Switch from "react-bootstrap/esm/Switch";
 import { BrowserRouter, Route } from "react-router-dom";
-
-
 import axios from 'axios';
-
 import './css/index.css';
-//component imports
+//importing components
 import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
 import apiKey from './config';
 import Nav from './Components/Nav'
 
 
-
 export default class App extends Component {
  
     constructor(props) {
       super(props);
-      //set initial state
+      //set initial state of photos to an empty array 
+      //set the intial state of searchText to an empty string
+      //Set the initial state of loading to true
+      //set the the initial state of title to empty string.
       this.state = { 
-        search: [],
         photos:[],
         searchText:'',  
         loading: true,
-        title: '',
-        
+        title: ''
       };
     }
 
     /** 
      * `getPhoto` requests an api and sets the state properties
-     * @param {string} query - a url query to set to state
-     * @param {Array} photos - an array of photo url from API 
-     * @param {bool} loading - removes loading text when fetching is done. 
-     * @param {string} title - sets title of the searched query.  
+     * @param {string} query - a name of query
+     * @param {Array} photos - an array of photo url from the API 
+     * @param {bool} loading - sets to false. 
+     * @param {string} title - sets title of the searched query to uppercase letters. 
+     * 
+     * catches fetching/parsing errors.  
      * */
     
-    getPhoto = (query = this.search) => { 
+    getPhoto = (query = this.searchText) => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
@@ -53,7 +53,6 @@ export default class App extends Component {
           loading: false,
           title: query.toUpperCase()
         });
-        
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
@@ -66,16 +65,15 @@ export default class App extends Component {
      */
 
      componentDidMount(){
-      this.getPhoto('dogs' )
+      this.getPhoto('dogs')
     }
 
-      //updates the photos from the previous links 
-    //need to stop infinite loop after button click 
+     /**`componentDidUpdate - compares the previous state of the searchText/title to the current state of the searchText/title
+      * if they don't match the `getPhoto` method calls the current state of the searchText. 
+       */
     componentDidUpdate(prevProps, prevState) { 
-      if(prevState.searchText !== this.state.searchText && 
-        prevState.title !== this.state.title){
-        this.getPhoto(this.state.searchText)
-        return this.setState({loading: false})
+      if(prevState.searchText !== this.state.searchText){
+        return this.getPhoto(this.state.searchText)
         }
     }
 
@@ -95,13 +93,13 @@ export default class App extends Component {
                 {
                   (this.state.loading)
                   ?<h2>loading...</h2>
-                  : <Route>
+                  : <Switch>
                     <Route  path="/" render={() =>  <PhotoList data={this.state.photos} /> } />
                     <Route exact path="/:query" render={() => <PhotoList data={this.state.searchText} />}  /> 
                     <Route path="/birds" render={() => {this.getPhoto('birds')}} />  
                     <Route path="/frogs" render={() => {this.getPhoto('frogs')}} />
                     <Route path="/cats" render={() => {this.getPhoto('cats')}} />
-                  </Route>
+                  </Switch>
                 }
                 </div>
             </BrowserRouter>     

@@ -19,13 +19,13 @@ import { withRouter } from 'react-router';
         let path = `${this.state.searchText}`
         this.props.onSearch(this.query.value);
         this.props.history.push(`/search/${path}`);
-        e.currentTarget.reset();
+        this.setState({searchText: ''})
     }
 
     render(){
         return(
                 <form className="search-form" onSubmit={this.handleSubmit}>
-                    <input type="search"
+                    <input id="search" type="search"
                         onChange={this.onSearchChange}
                         name="search"
                         value={this.state.searchText}
