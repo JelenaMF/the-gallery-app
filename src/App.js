@@ -27,33 +27,7 @@ export default class App extends Component {
         title: '',
         
       };
-      this.handleClick = this.handleClick.bind(this);
     }
-
-    //updates the photos from the previous links 
-    //need to stop infinite loop after button click 
-    componentDidUpdate(prevProps, prevState) { 
-      if(prevState.searchText !== this.state.searchText && 
-        prevState.title !== this.state.title){
-        this.getPhoto(this.state.searchText)
-        return this.setState({loading: false})
-        }
-    }
-
-    handleClick = ({target: {value}}) => {
-      this.setState({searchText: value});
-      this.getPhoto(value)
-    }
-
-    /**
-     * mounts the api from the `getPhoto`
-     * @param dogs - initial query 
-     */
-
-    componentDidMount(){
-      this.getPhoto( )
-    }
-
 
     /** 
      * `getPhoto` requests an api and sets the state properties
@@ -63,7 +37,7 @@ export default class App extends Component {
      * @param {string} title - sets title of the searched query.  
      * */
     
-    getPhoto = (query = 'dog') => { 
+    getPhoto = (query = this.search) => { 
       const url = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
       axios.get(url)
       .then(res => {
@@ -84,6 +58,25 @@ export default class App extends Component {
       .catch( err => {
         console.log('Error fetching and parsing data', err)
       })
+    }
+
+    /**
+     * mounts the api from the `getPhoto`
+     * @param dogs - initial query 
+     */
+
+     componentDidMount(){
+      this.getPhoto('dogs' )
+    }
+
+      //updates the photos from the previous links 
+    //need to stop infinite loop after button click 
+    componentDidUpdate(prevProps, prevState) { 
+      if(prevState.searchText !== this.state.searchText && 
+        prevState.title !== this.state.title){
+        this.getPhoto(this.state.searchText)
+        return this.setState({loading: false})
+        }
     }
 
     render() {
