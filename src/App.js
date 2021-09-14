@@ -9,16 +9,21 @@ import SearchForm from './Components/SearchForm';
 import PhotoList from './Components/PhotoList';
 import apiKey from './config';
 import Nav from './Components/Nav'
+import NotFound from './Components/NotFound'
 
 
 export default class App extends Component {
  
     constructor(props) {
       super(props);
-      //set initial state of photos to an empty array 
-      //set the intial state of searchText to an empty string
-      //Set the initial state of loading to true
-      //set the the initial state of title to empty string.
+      /** 
+        * set initial state of photos to an empty array 
+        * set the initial state of searchText to an empty string
+        * Set the initial state of loading to true
+        * set the the initial state of title to empty string.
+       * 
+       */
+      
       this.state = { 
         photos:[],
         searchText:'',  
@@ -26,6 +31,15 @@ export default class App extends Component {
         title: ''
       };
     }
+
+     /**
+     * mounts the api from the `getPhoto`
+     * @param dogs - initial query 
+     */
+
+      componentDidMount(){
+        this.getPhoto('dogs')
+      }
 
     /** 
      * `getPhoto` requests an api and sets the state properties
@@ -43,40 +57,39 @@ export default class App extends Component {
       .then(res => {
         const data = res.data.photos.photo;
         const picArray = data.map((photoData) => {
-        const id= photoData.id;
-        const server= photoData.server;
-        const secret = photoData.secret;
-        return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
+          const id= photoData.id;
+          const server= photoData.server;
+          const secret = photoData.secret;
+          return `https://live.staticflickr.com/${server}/${id}_${secret}.jpg`;
         });
         this.setState({
           photos: picArray, 
           loading: false,
           title: query.toUpperCase()
         });
+        
       })
       .catch( err => {
         console.log('Error fetching and parsing data', err)
       })
     }
 
-    /**
-     * mounts the api from the `getPhoto`
-     * @param dogs - initial query 
-     */
-
-     componentDidMount(){
-      this.getPhoto('dogs')
-    }
+   
 
      /**`componentDidUpdate - compares the previous state of the searchText/title to the current state of the searchText/title
       * if they don't match the `getPhoto` method calls the current state of the searchText. 
        */
     componentDidUpdate(prevProps, prevState) { 
+      console.log('componentdidupdate');
       if(prevState.searchText !== this.state.searchText){
-        return this.getPhoto(this.state.searchText)
+        this.getPhoto(this.state.searchText)
         }
     }
 
+    componentWillUnmount(prevProps){
+      this.getPhoto(prevProps)
+    }
+    
     render() {
       return(
           <div className="main-header">
@@ -99,6 +112,8 @@ export default class App extends Component {
                     <Route path="/birds" render={() => {this.getPhoto('birds')}} />  
                     <Route path="/frogs" render={() => {this.getPhoto('frogs')}} />
                     <Route path="/cats" render={() => {this.getPhoto('cats')}} />
+                    <Route path="/cats" render={() => <NotFound />} />
+
                   </Switch>
                 }
                 </div>

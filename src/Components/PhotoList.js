@@ -11,6 +11,8 @@ const PhotoList = props => {
         for(let i = 0; i < results.length; i++){
             list.push(<Photo url={results[i]} alt={alt} key={i}  />)
         }
+        
+    
     } else {
         /** route to no-results-layout */
         <NotFound />
