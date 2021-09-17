@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import Photo from './Photo';
-import NotFound from './NotFound';
 import axios from 'axios';
-import  {match, withRouter} from 'react-router'
 import apiKey from '../config';
 export default class PhotoList extends Component {
     constructor(props) {
@@ -17,11 +15,12 @@ export default class PhotoList extends Component {
         
         this.state = { 
           photos:[],
-          searchText:'',  
           loading: true,
           title: ''
         };
       }
+
+      /** initializes query to 'dogs' and replaces the pathname according to the search input or link press */
 
       componentDidMount(){
           const searchText = this.props.location.pathname.replace('/', '');
@@ -29,7 +28,6 @@ export default class PhotoList extends Component {
               this.getPhoto('dogs');
           } else {
             this.getPhoto(searchText);
-
           }
       }
 
@@ -66,18 +64,25 @@ export default class PhotoList extends Component {
               console.log('Error fetching and parsing data', err)
             })
           }
-    render(){
-        console.log(this.props);   
+        render(){
+        //destructuring the state of photos and titles 
         const { photos, title } = this.state;
+        /**variable `photoList` sets the URL, alt, and key for each photo. 
+         * The alt is currently set to the tile (may consider an alternative method for better accessibility practice) */
         const photoList = photos.map((photo) => {
            return <Photo url={photo} alt={title} key={photo} />
-        })
+        }) 
         return(
             <div className="photo-container">
                 <h2> {title} </h2>
-                <ul>
-                    {photoList}
-                </ul>
+                {
+                  (this.state.loading)
+                  ?<h2>loading...</h2>
+                  :  <ul>
+                        {photoList}
+                    </ul>
+                }
+               
             </div>
             
         )

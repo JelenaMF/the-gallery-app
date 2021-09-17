@@ -1,34 +1,45 @@
 import React, { Component } from 'react';
-
-
 import { FaSearch } from 'react-icons/fa';
 import { withRouter } from 'react-router';
 
+
+//importing components
+import NotFound from '../Components/NotFound';
+import PhotoList from '../Components/PhotoList';
+
  class SearchForm extends Component {
-    state = {
-        searchText: '',
-    }
 
+
+        state = {
+            query: '',
+            loading: true
+        }
+ 
+    
+    
     onSearchChange = e => {
-        this.setState({ searchText: e.target.value });
+        this.setState({ 
+            query: e.target.value, 
+        });
     }
 
+   
     handleSubmit = e => {
         e.preventDefault();
         //set path with searchText
-        let path = `${this.state.searchText}`
-        this.props.onSearch(this.query.value);
+        let path = `${this.state.query}`;
         this.props.history.push(`/search/${path}`);
-        this.setState({searchText: ''})
+        this.setState({query: '', loading:false})
     }
 
     render(){
+        const {query} = this.state;
         return(
-                <form className="search-form" onSubmit={this.handleSubmit}>
+                <form className="search-form" onSubmit={this.handleSubmit} >
                     <input id="search" type="search"
                         onChange={this.onSearchChange}
                         name="search"
-                        value={this.state.searchText}
+                        value={query}
                         ref={(input) => this.query=input}
                         placeholder="Search..." 
                     />

@@ -14,6 +14,7 @@ import NotFound from './Components/NotFound'
 export default class App extends Component {
     
     render() {
+
       return(
           <div className="main-header">
             <div className="inner">
@@ -21,13 +22,13 @@ export default class App extends Component {
               {/** Enter Search bar */}
             </div>
             <div className="container">
-            <BrowserRouter>
-            <SearchForm  />   
+            <BrowserRouter> 
+            <SearchForm />   
              <Nav /> 
                 {
                   <Switch>
-{/* {                    <Route exact path="/:query" render={() => <PhotoList  />}  />  */}
-                   <Route path="/birds"component={PhotoList} />  
+                    <Route exact path="/:query"  />
+                    <Route path="/birds"component={PhotoList} />  
                     <Route path="/frogs" component={PhotoList} />
                     <Route path="/cats" component={PhotoList} />
                     {/* add a conditional statement here or in the SearchFrom file or in the PhotoList 
