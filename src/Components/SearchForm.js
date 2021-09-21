@@ -8,26 +8,20 @@ import PhotoList from '../Components/PhotoList';
 
  class SearchForm extends Component {
     state = {
-        query: '',
-        data: [],
-        searchText: ''
-
+        searchText: '',
+        results: []
     }
 
     onSearchChange = e => {
-        this.setState({ 
-            query: e.target.value, 
-            searchText: this.query.value
-        });
-            
+        this.setState({ searchText: e.target.value });
     }
 
     handleSubmit = e => {
         e.preventDefault();
         //set path with searchText
-        let path = `${this.state.query}`
+        let path = `${this.state.searchText}`
         this.props.history.push(`/search/${path}`);
-        this.setState({query: ''})
+        
     }
     
 
@@ -37,8 +31,7 @@ import PhotoList from '../Components/PhotoList';
                     <input id="search" type="search"
                         onChange={this.onSearchChange}
                         name="search"
-                        value={this.state.query}
-                        ref={(input) => this.query=input}
+                        value={this.state.searchText}
                         placeholder="Search..." 
                     />
                 <button type='submit' id="submit" className="search-form-button"><FaSearch /></button>
