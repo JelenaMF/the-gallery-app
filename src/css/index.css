@@ -72,6 +72,12 @@ input {
   background-color: #275270;
 }
 
+label{
+  font-weight: 600;
+  font-size: 30px;
+  padding-right: 15px;
+}
+
 .photo-container ul {
   display: flex;
   flex-flow: row wrap;

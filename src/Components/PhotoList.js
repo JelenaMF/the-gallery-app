@@ -3,6 +3,10 @@ import Photo from './Photo';
 import axios from 'axios';
 import apiKey from '../config';
 
+import NotFound from './NotFound';
+import SearchForm from './SearchForm';
+
+
 export default class PhotoList extends Component {
     constructor(props) {
         super(props);
@@ -29,7 +33,7 @@ export default class PhotoList extends Component {
               this.getPhoto('dogs');
           } else {
             this.getPhoto(searchText);
-          }
+          } 
       }
 
         /** 
@@ -73,7 +77,9 @@ export default class PhotoList extends Component {
         const photoList = photos.map((photo) => {
            return <Photo url={photo} alt={title} key={photo} />
         }) 
+
         return(
+          
             <div className="photo-container">
                 <h2> {title} </h2>
                 {
