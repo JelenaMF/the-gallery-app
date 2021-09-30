@@ -34,7 +34,7 @@ export default class App extends Component {
                     {/* add a conditional statement here or in the SearchFrom file or in the PhotoList 
                       that will create a 'notfound route that displays the NotFound component page. 
                     */}
-                    <Route path="/notfound" render={() => <NotFound />} />
+                    <Route path="/notfound" component={ NotFound } />
                     <Route exact path="/" component={ PhotoList } />
                   </Switch>
                 }

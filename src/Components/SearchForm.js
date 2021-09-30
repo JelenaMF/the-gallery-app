@@ -24,11 +24,15 @@ import PhotoList from './PhotoList';
         }
     }
     
+    getPhoto = (query = this.state.searchText) => {
+        //get url for the searched input
+        //then set state of photos to the new data 
+    }
+
     render(){
 
         return(
                 <form className="search-form" onSubmit={this.handleSubmit}>
-                        <label id="search">Search: </label>
                         <input  type="search"
                             onChange={this.onSearchChange}
                             name="search"
