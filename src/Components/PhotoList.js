@@ -3,8 +3,8 @@ import Photo from './Photo';
 import axios from 'axios';
 import apiKey from '../config';
 
-import NotFound from './NotFound';
-import SearchForm from './SearchForm';
+ import NotFound from './NotFound';
+// import SearchForm from './SearchForm';
 
 
 export default class PhotoList extends Component {
@@ -32,8 +32,9 @@ export default class PhotoList extends Component {
           if(searchText === ''){
               this.getPhoto('dogs');
           } else {
-            this.getPhoto(searchText);
-          } 
+            this.getPhoto(searchText); 
+            console.log(searchText)    
+          }
       }
 
         /** 
@@ -77,10 +78,17 @@ export default class PhotoList extends Component {
         const photoList = photos.map((photo) => {
            return <Photo url={photo} alt={title} key={photo} />
         }) 
-
+        if(photos.length > 0){
+          for(let i = 0; i < photos.length; i++){
+            photoList.push(<Photo url={photos[i]} alt={photos} key={i}  />)
+          } 
+        } else {
+          <NotFound /> 
+        }
         return(
           
             <div className="photo-container">
+              
                 <h2> {title} </h2>
                 {
                   (this.state.loading)
@@ -88,10 +96,9 @@ export default class PhotoList extends Component {
                   :  <ul>
                         {photoList}
                     </ul>
-                }
-               
+                }   
             </div>
-            
+             
         )
     }
     

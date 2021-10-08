@@ -23,7 +23,7 @@ export default class App extends Component {
             </div>
             <div className="container">
             <BrowserRouter> 
-            <SearchForm onSearch={this.onChange} />   
+            <SearchForm onSearch={this.props.photos} />   
              <Nav /> 
                 {
                   <Switch>

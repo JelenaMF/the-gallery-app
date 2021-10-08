@@ -2,35 +2,37 @@ import React, { Component } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { withRouter } from 'react-router';
 
-import PhotoList from './PhotoList';
+//import Photo from './Photo';
 
  class SearchForm extends Component {
-    state = {
-        searchText: ''    
+    constructor(props) {
+        super(props);
+        this.state = {searchText: ''};
+
+        //this.onSearchChange = this.onSearchChange.bind(this);
+        //this.handleSubmit = this.handleSubmit.bind(this);
     }
+    
 
     onSearchChange = e => {
         this.setState({ searchText: e.target.value });
+        console.log(this.state.searchText)
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
-        e.currentTarget.reset();
-        if(this.state.searchText.length > 0){
+    handleSubmit = e => {  
+       e.preventDefault();
+       e.currentTarget.reset();
+       this.props.onSearch(this.query.value)
             //set path with searchText
         let path = `${this.state.searchText}`;
         this.props.history.push(`/search/${path}`);
-        <PhotoList />
-        }
     }
     
-    getPhoto = (query = this.state.searchText) => {
-        //get url for the searched input
-        //then set state of photos to the new data 
-    }
 
     render(){
-
+        const {searchText} = this.state;
+        
+        console.log(searchText)
         return(
                 <form className="search-form" onSubmit={this.handleSubmit}>
                         <input  type="search"
@@ -41,7 +43,7 @@ import PhotoList from './PhotoList';
                             placeholder="Search..." 
                         />
 
-                <button type='submit' id="submit" className="search-form-button"><FaSearch /></button>
+                    <button type='submit' id="submit" className="search-form-button"><FaSearch /></button>
                 </form>
             
         );
